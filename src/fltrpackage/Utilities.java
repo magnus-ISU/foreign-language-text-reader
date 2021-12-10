@@ -45,6 +45,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -58,6 +59,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
+
+import fltrpackage.Constants.OS_T;
 
 public class Utilities {
 
@@ -94,7 +97,8 @@ public class Utilities {
 			}
 			lockFile.deleteOnExit();
 			lockFile.createNewFile();
-		} catch (Exception e) {
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -123,7 +127,8 @@ public class Utilities {
 				fos.write(buf, 0, i);
 			}
 			msg = true;
-		} catch (Exception e) {
+		} catch (IOException e) {
+			e.printStackTrace();
 			msg = false;
 		} finally {
 			try {
@@ -133,7 +138,8 @@ public class Utilities {
 				if (fos != null) {
 					fos.close();
 				}
-			} catch (Exception e) {
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		return msg;
@@ -143,7 +149,8 @@ public class Utilities {
 		boolean ok;
 		try {
 			ok = f.createNewFile();
-		} catch (Exception e) {
+		} catch (IOException e) {
+			e.printStackTrace();
 			ok = false;
 		}
 		return ok;
@@ -152,7 +159,8 @@ public class Utilities {
 	public static boolean createNewFile(File f) {
 		try {
 			return f.createNewFile();
-		} catch (Exception e) {
+		} catch (IOException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -181,7 +189,7 @@ public class Utilities {
 			f = File.createTempFile(prefix, suffix, dir);
 			f.deleteOnExit();
 		} catch (IOException e) {
-			Utilities.showErrorMessage("Cannot create temporary file.");
+			Utilities.showErrorMessage("Cannot create temporary file.", e);
 			FLTR.stop();
 		}
 		return f;
@@ -199,6 +207,7 @@ public class Utilities {
 		try {
 			return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "";
 		}
 	}
@@ -231,8 +240,6 @@ public class Utilities {
 
 	public static ImageIcon getIcon() {
 		try {
-			InputStream is = Utilities.class.getResourceAsStream(Constants.ICONPATH);
-			is.close();
 			return new ImageIcon(Toolkit.getDefaultToolkit()
 					.getImage(FLTR.getStartFrame().getClass().getResource(Constants.ICONPATH)));
 		} catch (Exception e) {
@@ -284,14 +291,6 @@ public class Utilities {
 		}
 	}
 
-	public static boolean isMac() {
-		return (System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0);
-	}
-
-	public static boolean isWin() {
-		return (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0);
-	}
-
 	public static String leftTrim(String s) {
 		int i = 0;
 		while ((i < s.length()) && Character.isWhitespace(s.charAt(i))) {
@@ -320,67 +319,45 @@ public class Utilities {
 
 	public static void openDirectoryInFileExplorer(File dir) {
 		try {
-			Desktop.getDesktop().open(dir);
-			return;
-		} catch (Exception e) {
-		}
-		String os = System.getProperty("os.name").toLowerCase();
-		if ((os.indexOf("nix") >= 0) || (os.indexOf("nux") >= 0)) {
-			try {
-				String[] fmgrs = { "xdg-open", "nemo", "thunar", "nautilus", "dolphin" };
-				StringBuffer cmd = new StringBuffer();
-				for (int i = 0; i < fmgrs.length; i++) {
-					cmd.append((i == 0 ? "" : " || ") + fmgrs[i] + " \"" + dir.getAbsolutePath() + "\" ");
-				}
-				Runtime.getRuntime().exec(new String[] { "sh", "-c", cmd.toString() });
-			} catch (Exception e) {
-				Utilities.showErrorMessage(
-						"Opening a Directory in a File Explorer not possible\n(Try to install a a newer Java runtime).");
+			if (Constants.OS == OS_T.LINUX) {
+				xdgOpen(dir.getAbsolutePath());
+			} else {
+				Desktop.getDesktop().open(dir);
 			}
-		} else {
-			Utilities.showErrorMessage(
-					"Opening a Directory in a File Explorer not possible\n(desktop integration problem, try to install a newer Java runtime).");
+		} catch (IOException e) {
+			Utilities.showErrorMessage("Opening a Directory in a File Explorer not possible.", e);
 		}
 	}
 
 	public static void openTextFileInEditor(File textFile) {
 		try {
-			Desktop.getDesktop().edit(textFile);
-			return;
-		} catch (Exception e) {
-		}
-		String os = System.getProperty("os.name").toLowerCase();
-		if ((os.indexOf("nix") >= 0) || (os.indexOf("nux") >= 0)) {
-			try {
-				String[] editors = { "xdg-open", "leafpad", "mousepad", "gedit" };
-				StringBuffer cmd = new StringBuffer();
-				for (int i = 0; i < editors.length; i++) {
-					cmd.append((i == 0 ? "" : " || ") + editors[i] + " \"" + textFile.getAbsolutePath() + "\" ");
-				}
-				Runtime.getRuntime().exec(new String[] { "sh", "-c", cmd.toString() });
-			} catch (Exception e) {
-				Utilities.showErrorMessage(
-						"Text file cannot be edited\n(no text editor found, or try to install a newer Java runtime).");
+			if (Constants.OS == OS_T.LINUX) {
+				// Somehow, Kate fails to open this for no reason. But Desktop.edit() doesn't work either so it isn't a regression I think
+				xdgOpen(textFile.getAbsolutePath());
+			} else {
+				Desktop.getDesktop().edit(textFile);
 			}
-		} else {
-			Utilities.showErrorMessage(
-					"Text file cannot be edited\n(desktop integration problem, try to install a newer Java runtime).");
+		} catch (IOException e) {
+			Utilities.showErrorMessage("Text file cannot be edited.", e);
 		}
 	}
 
 	public static void openURLInDefaultBrowser(String urlstring) {
-		URI u = null;
+		URI uri = null;
 		try {
-			u = new URI(urlstring);
-		} catch (Exception e) {
-			Utilities.showErrorMessage("URL cannot be opened (Malformed URL: " + urlstring + ").");
+			uri = new URI(urlstring);
+		} catch (URISyntaxException e) {
+			Utilities.showErrorMessage("URL cannot be opened (Malformed URL: " + urlstring + ").", e);
 			return;
 		}
 		try {
-			Desktop.getDesktop().browse(u);
-		} catch (Exception e) {
-			Utilities.showErrorMessage("URL (" + urlstring
-					+ ") cannot be opened\n(desktop integration problem, try to install a newer Java runtime).");
+			if (Constants.OS == OS_T.LINUX) {
+				xdgOpen(urlstring);
+			} else {
+				Desktop.getDesktop().browse(uri);
+			}
+		} catch (IOException e) {
+			Utilities.showErrorMessage("URL '" + urlstring + "' cannot be opened.", e);
 		}
 	}
 
@@ -472,7 +449,7 @@ public class Utilities {
 	}
 
 	public static File saveFileDialog(JFrame frame, String title, String initialDirectoryPath) {
-		if (!Utilities.isMac()) {
+		if (Constants.OS != OS_T.MACOS) {
 			JFileChooser chooser;
 			File f = new File(initialDirectoryPath);
 			if (f.isDirectory()) {
@@ -574,6 +551,14 @@ public class Utilities {
 		}
 	}
 
+	public static void showErrorMessage(String msg, Exception e) {
+		if (e != null) {
+			e.printStackTrace();
+			msg += "\nRun FLTR in a terminal to see the stacktrace, this can help diagnose the problem.";
+		}
+		JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.ERROR_MESSAGE, Utilities.getIcon());
+	}
+
 	public static void showErrorMessage(String msg) {
 		JOptionPane.showMessageDialog(null, msg, "Error", JOptionPane.ERROR_MESSAGE, Utilities.getIcon());
 	}
@@ -613,4 +598,7 @@ public class Utilities {
 		}
 	}
 
+	private static void xdgOpen(String arg) throws IOException {
+		Runtime.getRuntime().exec(new String[] {"xdg-open", arg});
+	}
 }

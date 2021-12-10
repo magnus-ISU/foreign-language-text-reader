@@ -42,6 +42,12 @@ public class Constants {
 	public static final String VOCAB_HTML_PATH = "/fltrpackage/_Vocabulary.htm";
 	public static final String TEXT_HTML_PATH = "/fltrpackage/_Text.htm";
 
+	public static final String OS_STRING = System.getProperty("os.name").toLowerCase();
+	public static final OS_T OS = (OS_STRING.indexOf("win") >= 0) ? OS_T.WINDOWS :
+			(OS_STRING.indexOf("mac") >= 0) ? OS_T.MACOS :
+			(OS_STRING.indexOf("nux") >= 0 || OS_STRING.indexOf("nix") >= 0) ? OS_T.LINUX :
+			OS_T.UNKNOWN; // Assuming this is BSD or something, should probably also be linux but will leave for now
+
 	public static final String DATA_DIR = System.getenv("XDG_DATA_HOME") == null ? System.getProperty("user.home") : System.getenv("XDG_DATA_HOME");
 	public static final String LOCK_FILE_PATH = DATA_DIR + System.getProperty("file.separator") + ".foreign-language-text-reader-lock";
 	public static final String PREF_FILE_PATH = DATA_DIR + System.getProperty("file.separator") + ".foreign-language-text-reader-prefs";
@@ -71,7 +77,7 @@ public class Constants {
 	public static final String ENCODING = "UTF-8";
 
 	public static final String TAB = "\t";
-	public static final String EOL = "\r\n";
+	public static final String EOL = OS == OS_T.WINDOWS ? "\r\n" : "\n";
 	public static final String UNIX_EOL = "\n";
 	public static final String TERMS_SEPARATOR = " · ";
 	public static final String URL_BEGIN_1 = "http://";
@@ -79,4 +85,10 @@ public class Constants {
 	public static final String EXEC_NOWAIT_END_MARKER = "&"; // Shell command (non-waiting)
 	public static final String TERM_PLACEHOLDER = "###";
 
+	public enum OS_T {
+		WINDOWS,
+		MACOS,
+		LINUX,
+		UNKNOWN,
+	}
 }

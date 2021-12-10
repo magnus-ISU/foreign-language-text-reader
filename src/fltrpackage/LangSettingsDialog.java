@@ -42,6 +42,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import fltrpackage.Constants.OS_T;
+
 @SuppressWarnings("serial")
 public class LangSettingsDialog extends JDialog {
 
@@ -85,7 +87,7 @@ public class LangSettingsDialog extends JDialog {
 		setResizable(false);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
-		if (!Utilities.isMac()) {
+		if (Constants.OS != OS_T.MACOS) {
 			setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Constants.ICONPATH)));
 		}
 	}

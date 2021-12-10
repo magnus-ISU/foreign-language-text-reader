@@ -65,7 +65,7 @@ public class NewTextDialogListener implements ActionListener {
 			}
 			if (!Utilities.checkFileNameOK(textName)) {
 				Utilities.showErrorMessage(
-						"Text name contains invalid characters \\, /, :, \", *, ?,\n<, >, |, NEWLINE, TAB or begins with '.'.\nThis has been corrected, please check!");
+						"Text name contains invalid characters \\, /, :, \", *, ?,\n<, >, |, NEWLINE, TAB or begins with '.'.\nThis has been corrected, please check!", null);
 				frame.getTfTextName().setText(Utilities.replaceNonFileNameCharacters(textName));
 				frame.getTfTextName().requestFocusInWindow();
 				return;
@@ -95,7 +95,7 @@ public class NewTextDialogListener implements ActionListener {
 					Preferences.putCurrText(textName);
 				}
 			} else {
-				Utilities.showErrorMessage("Not possible.");
+				Utilities.showErrorMessage("Somehow a directory appears not to be a directory, what are you doing?");
 			}
 			frame.setResult(1);
 			frame.setVisible(false);

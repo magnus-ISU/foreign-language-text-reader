@@ -143,7 +143,7 @@ public class NewLanguageDialogListener implements ActionListener, FocusListener 
 							frame.dispose();
 						} else {
 							Utilities.showErrorMessage("Language '" + newLang + "' NOT successfully created."
-									+ "\n\nPlease check " + Constants.SHORT_NAME + " directory.");
+									+ "\n\nPlease check " + Constants.SHORT_NAME + " directory.", null);
 						}
 					}
 				}
@@ -153,7 +153,7 @@ public class NewLanguageDialogListener implements ActionListener, FocusListener 
 			if (notOK) {
 				Utilities.showErrorMessage("Creation of language '" + newLang + "' NOT possible,\n"
 						+ "directory or file(s) already exist.\n\nPlease check " + Constants.SHORT_NAME
-						+ " directory.");
+						+ " directory.", null);
 			}
 		}
 	}

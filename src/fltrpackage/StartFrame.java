@@ -40,6 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.WindowConstants;
 
+import fltrpackage.Constants.OS_T;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
@@ -141,7 +142,7 @@ public class StartFrame extends JFrame {
 				Preferences.getCurrYPosStartWindow((d.height - this.getSize().height) / 2));
 		getContentPane().addHierarchyBoundsListener(listener);
 
-		if (!Utilities.isMac()) {
+		if (Constants.OS != OS_T.MACOS) {
 			setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Constants.ICONPATH)));
 		}
 	}

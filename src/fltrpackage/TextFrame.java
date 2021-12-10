@@ -40,6 +40,8 @@ import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import fltrpackage.Constants.OS_T;
+
 @SuppressWarnings("serial")
 public class TextFrame extends JFrame {
 
@@ -90,7 +92,7 @@ public class TextFrame extends JFrame {
 				Preferences.getCurrYPosTextWindow((d.height - this.getSize().height) / 2));
 		getContentPane().addHierarchyBoundsListener(listener);
 
-		if (!Utilities.isMac()) {
+		if (Constants.OS != OS_T.MACOS) {
 			setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Constants.ICONPATH)));
 		}
 	}
