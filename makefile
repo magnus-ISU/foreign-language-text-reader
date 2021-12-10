@@ -1,11 +1,10 @@
 INSTALL_PREFIX?=/usr/local
 
-.PHONY=install install-helpers
+.PHONY=install install-helpers clean
 
 all: build/foreign-language-text-reader.jar
 
 build/foreign-language-text-reader.jar:
-	echo $(INSTALL_PREFIX)
 	mkdir -p build/
 	javac -cp resources/miglayout-4.0-swing.jar:src/fltrpackage/:./src src/FLTR.java -d build
 	cp resources/*.htm resources/*.png build/fltrpackage
@@ -36,3 +35,6 @@ uninstall:
 	rm $(INSTALL_PREFIX)/share/pixmaps/foreign-language-text-reader.png
 	rm $(INSTALL_PREFIX)/lib/foreign-language-text-reader/foreign-language-text-reader.jar
 	rmdir $(INSTALL_PREFIX)/lib/foreign-language-text-reader/
+
+clean:
+	rm -rf build/

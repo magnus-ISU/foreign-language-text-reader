@@ -203,6 +203,7 @@ public class Utilities {
 		}
 	}
 
+	// TODO does not follow XDG directory specification
 	public static String getDownloadsDirectoryPath() {
 		String r = System.getProperty("user.home") + System.getProperty("file.separator") + "Downloads";
 		File f = new File(r);

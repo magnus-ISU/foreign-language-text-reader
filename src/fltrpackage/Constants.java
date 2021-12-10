@@ -41,10 +41,10 @@ public class Constants {
 	public static final String HEADER_HTML_PATH = "/fltrpackage/_Header.htm";
 	public static final String VOCAB_HTML_PATH = "/fltrpackage/_Vocabulary.htm";
 	public static final String TEXT_HTML_PATH = "/fltrpackage/_Text.htm";
-	public static final String LOCK_FILE_PATH = System.getProperty("user.home") + System.getProperty("file.separator")
-			+ ".fltrlock";
-	public static final String PREF_FILE_PATH = System.getProperty("user.home") + System.getProperty("file.separator")
-			+ ".fltrprefs";
+
+	public static final String DATA_DIR = System.getenv("XDG_DATA_HOME") == null ? System.getProperty("user.home") : System.getenv("XDG_DATA_HOME");
+	public static final String LOCK_FILE_PATH = DATA_DIR + System.getProperty("file.separator") + ".foreign-language-text-reader-lock";
+	public static final String PREF_FILE_PATH = DATA_DIR + System.getProperty("file.separator") + ".foreign-language-text-reader-prefs";
 
 	public static final String TEXT_DIR_SUFFIX = "_Texts";
 	public static final int TEXT_DIR_SUFFIX_LENGTH = Constants.TEXT_DIR_SUFFIX.length();
