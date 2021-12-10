@@ -28,7 +28,7 @@ IMPORTANT! Only do this on Linux. Only tested on Arch, otherwise you might have 
 
 Run `sudo make install`
 
-Installs to `/usr/local/` by default. Otherwise set the INSTALL\_PREFIX variable.
+Installs to `/usr/local/` by default. Otherwise set the INSTALL\_PREFIX variable (and remember to run `sudo` with the `-E` option)
 
 ## LICENSE
 
