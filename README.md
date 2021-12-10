@@ -11,12 +11,12 @@ Online Documentation: https://foreign-language-text-reader.sourceforge.io
 
 ## File structure
 
-bin/       - Contains a prebuilt jarfile, the documentation PDF, and some demo data
-resources/ - Contains non-source files necessary to build FLTR
-src/       - Contains the source code of FLTR
-PKGBUILD   - For arch linux
-makefile   - Builds FLTR anywhere (anywhere civilized - idk how Windows works)
-README.md  - Documentation
+- bin/       - Contains a prebuilt jarfile, the documentation PDF, and some demo data
+- resources/ - Contains non-source files necessary to build FLTR
+- src/       - Contains the source code of FLTR
+- aur/       - For arch linux
+- makefile   - Builds FLTR anywhere (anywhere civilized - idk how Windows works)
+- README.md  - Documentation
 
 ## Building
 
