@@ -1,1 +1,3 @@
 build/
+aur/*.pkg.tar.zst
+aur/foreign-language-text-reader/
