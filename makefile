@@ -1,4 +1,5 @@
 INSTALL_PREFIX?=/usr/local
+INSTALL_FAKENAME?=$(INSTALL_PREFIX)
 
 .PHONY=install install-helpers clean
 
@@ -14,8 +15,8 @@ build/foreign-language-text-reader.jar:
 
 
 install-helpers:
-	sed 's|INSTALL_PREFIX|$(INSTALL_PREFIX)|g' resources/linux/foreign-language-text-reader.sh > build/foreign-language-text-reader.sh
-	sed 's|INSTALL_PREFIX|$(INSTALL_PREFIX)|g' resources/linux/foreign-language-text-reader.desktop > build/foreign-language-text-reader.desktop
+	sed 's|INSTALL_PREFIX|$(INSTALL_FAKENAME)|g' resources/linux/foreign-language-text-reader.sh > build/foreign-language-text-reader.sh
+	sed 's|INSTALL_PREFIX|$(INSTALL_FAKENAME)|g' resources/linux/foreign-language-text-reader.desktop > build/foreign-language-text-reader.desktop
 
 install: all install-helpers
 	install -Dm755 build/foreign-language-text-reader.sh -t $(INSTALL_PREFIX)/bin/

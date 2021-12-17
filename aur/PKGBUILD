@@ -23,5 +23,5 @@ package() {
 	mkdir -p "$pkgdir/usr/share/applications"
 	mkdir -p "$pkgdir/usr/share/pixmaps"
 	cd "$srcdir/$pkgname"
-	INSTALL_PREFIX="$pkgdir/usr" make install
+	INSTALL_FAKENAME="/usr" INSTALL_PREFIX="$pkgdir/usr" make install
 }
