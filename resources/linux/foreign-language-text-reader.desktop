@@ -1,7 +1,6 @@
 [Desktop Entry]
 Version=1.4.0
 Name=Foreign Language Text Reader
-TryExec=INSTALL_PREFIX/lib/foreign-language-text-reader/foreign-language-text-reader.jar
 Exec=/bin/java -jar INSTALL_PREFIX/lib/foreign-language-text-reader/foreign-language-text-reader.jar
 Icon=foreign-language-text-reader
 Terminal=false
