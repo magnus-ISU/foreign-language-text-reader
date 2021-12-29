@@ -3,3 +3,5 @@ aur/*.pkg.tar.zst
 aur/foreign-language-text-reader/
 aur/pkg/
 aur/src/
+aur/.SRCINFO
+aur/.gitignore
