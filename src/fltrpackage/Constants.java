@@ -52,11 +52,9 @@ public class Constants {
 			OS_T.UNKNOWN; // Assuming this is BSD or something, should probably also be linux but will leave for now
 
 	public static final String DATA_DIR =
-		System.getenv("XDG_DATA_HOME") == null ?
-		!Files.isDirectory(Paths.get(System.getProperty("user.home"), "/.local/share")) ?
-		System.getProperty("user.home")
-		: System.getProperty("user.home") + "/.local/share"
-		: System.getenv("XDG_DATA_HOME");
+		System.getenv("XDG_DATA_HOME") != null ? System.getenv("XDG_DATA_HOME") :
+		Files.isDirectory(Paths.get(System.getProperty("user.home"), "/.local/share")) ? System.getProperty("user.home") + "/.local/share" :
+		System.getProperty("user.home");
 	public static final String LOCK_FILE_PATH = DATA_DIR + "/.foreign-language-text-reader-lock";
 	public static final String PREF_FILE_PATH = DATA_DIR + "/.foreign-language-text-reader-prefs";
 
