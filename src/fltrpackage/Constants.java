@@ -28,6 +28,7 @@
 package fltrpackage;
 
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Constants {
 
@@ -52,12 +53,12 @@ public class Constants {
 
 	public static final String DATA_DIR =
 		System.getenv("XDG_DATA_HOME") == null ?
-		!Files.isDirectory(System.getProperty("user.home") + "/.local/share") ?
+		!Files.isDirectory(Paths.get(System.getProperty("user.home"), "/.local/share")) ?
 		System.getProperty("user.home")
 		: System.getProperty("user.home") + "/.local/share"
 		: System.getenv("XDG_DATA_HOME");
-	public static final String LOCK_FILE_PATH = DATA_DIR + System.getProperty("file.separator") + ".foreign-language-text-reader-lock";
-	public static final String PREF_FILE_PATH = DATA_DIR + System.getProperty("file.separator") + ".foreign-language-text-reader-prefs";
+	public static final String LOCK_FILE_PATH = DATA_DIR + "/.foreign-language-text-reader-lock";
+	public static final String PREF_FILE_PATH = DATA_DIR + "/.foreign-language-text-reader-prefs";
 
 	public static final String TEXT_DIR_SUFFIX = "_Texts";
 	public static final int TEXT_DIR_SUFFIX_LENGTH = Constants.TEXT_DIR_SUFFIX.length();
