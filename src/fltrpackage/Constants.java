@@ -27,6 +27,8 @@
 
 package fltrpackage;
 
+import java.nio.file.Files;
+
 public class Constants {
 
 	public static final String SHORT_VERSION = "1.4.0";
@@ -48,7 +50,12 @@ public class Constants {
 			(OS_STRING.indexOf("nux") >= 0 || OS_STRING.indexOf("nix") >= 0) ? OS_T.LINUX :
 			OS_T.UNKNOWN; // Assuming this is BSD or something, should probably also be linux but will leave for now
 
-	public static final String DATA_DIR = System.getenv("XDG_DATA_HOME") == null ? System.getProperty("user.home") : System.getenv("XDG_DATA_HOME");
+	public static final String DATA_DIR =
+		System.getenv("XDG_DATA_HOME") == null ?
+		!Files.isDirectory(System.getProperty("user.home") + "/.local/share") ?
+		System.getProperty("user.home")
+		: System.getProperty("user.home") + "/.local/share"
+		: System.getenv("XDG_DATA_HOME");
 	public static final String LOCK_FILE_PATH = DATA_DIR + System.getProperty("file.separator") + ".foreign-language-text-reader-lock";
 	public static final String PREF_FILE_PATH = DATA_DIR + System.getProperty("file.separator") + ".foreign-language-text-reader-prefs";
 
