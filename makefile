@@ -7,7 +7,7 @@ all: build/foreign-language-text-reader.jar
 
 build/foreign-language-text-reader.jar:
 	mkdir -p build/
-	wget https://repo1.maven.org/maven2/com/miglayout/miglayout-swing/4.2/miglayout-swing-4.2.jar -O resources/miglayout-4.0-swing.jar
+	wget https://repo1.maven.org/maven2/com/miglayout/miglayout/3.7.4/miglayout-3.7.4-swing.jar -O resources/miglayout-4.0-swing.jar
 	javac -cp resources/miglayout-4.0-swing.jar:src/fltrpackage/:./src src/FLTR.java -d build
 	cp resources/*.htm resources/*.png build/fltrpackage
 	cp resources/miglayout-4.0-swing.jar build/foreign-language-text-reader.jar
