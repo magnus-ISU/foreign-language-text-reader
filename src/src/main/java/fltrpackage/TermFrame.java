@@ -40,7 +40,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JRootPane;
 import javax.swing.WindowConstants;
 
-import fltrpackage.Constants.OS_T;
+import fltrpackage.Constants.OS_T; //TODO: Solve this
+import japanese.ResultExtractor;
 import net.miginfocom.swing.MigLayout;
 
 @SuppressWarnings("serial")
@@ -60,6 +61,7 @@ public class TermFrame extends JFrame {
 	private TermFrameListener listener;
 	private String originalKey;
 	private int maxSim;
+	private final ResultExtractor re = new ResultExtractor();;
 
 	public TermFrame() {
 		super();
@@ -304,8 +306,8 @@ public class TermFrame extends JFrame {
 		setTitle("New Term");
 		originalKey = term.toLowerCase();
 		tfTerm.getTextArea().setText(term);
-		tfTranslation.getTextArea().setText("");
-		tfRomanization.getTextArea().setText("");
+		tfTranslation.getTextArea().setText(re.extractDefinitions(term));
+		tfRomanization.getTextArea().setText(re.extractReading(term));
 		if (!Preferences.getCurrText().equals(Constants.VOCAB_FILE_NAME)) {
 			tfSentence.getTextArea().setText(sentence);
 		} else {

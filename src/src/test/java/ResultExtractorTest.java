@@ -11,12 +11,18 @@ public class ResultExtractorTest {
 //        assertEquals("to decide", re.extractDefinitions(response).get(0));
 //        assertEquals("to choose", re.extractDefinitions(response).get(1));
 //        assertEquals("to determine", re.extractDefinitions(response).get(2));
-        System.out.println("Definitions extracted\n" + re.extractDefinitions(response));
+        System.out.println("Definitions extracted\n" + re.extractDefinitions("決める"));
     }
 
     @Test
     public void canExtractTerm(){
         assertEquals("決める", re.extractTerm(response).get(0));
         System.out.println("The term extracted was " + re.extractTerm(response));
+    }
+
+    @Test
+    public void canExtractReading(){
+        String word = "決める";
+        assertEquals("きめる", re.extractReading(word));
     }
 }
