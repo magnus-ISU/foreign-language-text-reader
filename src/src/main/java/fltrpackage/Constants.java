@@ -32,7 +32,7 @@ import java.nio.file.Paths;
 
 public class Constants {
 
-	public static final String SHORT_VERSION = "1.4.0";
+	public static final String SHORT_VERSION = "1.4.1";
 	public static final String VERSION = Constants.SHORT_VERSION + " (2021-06-14)";
 
 	public static final String SHORT_NAME = "FLTR";
@@ -40,10 +40,10 @@ public class Constants {
 	public static final String WEBSITE = "https://sourceforge.net/projects/foreign-language-text-reader/";
 	public static final String COPYRIGHT = "Copyright © 2012-2021 " + Constants.SHORT_NAME + " Developers et al.";
 
-	public static final String ICONPATH = "/fltrpackage/icon128.png";
-	public static final String HEADER_HTML_PATH = "/fltrpackage/_Header.htm";
-	public static final String VOCAB_HTML_PATH = "/fltrpackage/_Vocabulary.htm";
-	public static final String TEXT_HTML_PATH = "/fltrpackage/_Text.htm";
+	public static final String ICONPATH = "icon128.png";
+	public static final String HEADER_HTML_PATH = "_Header.htm";
+	public static final String VOCAB_HTML_PATH = "_Vocabulary.htm";
+	public static final String TEXT_HTML_PATH = "_Text.htm";
 
 	public static final String OS_STRING = System.getProperty("os.name").toLowerCase();
 	public static final OS_T OS = (OS_STRING.indexOf("win") >= 0) ? OS_T.WINDOWS :

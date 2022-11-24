@@ -142,9 +142,9 @@ public class StartFrame extends JFrame {
 				Preferences.getCurrYPosStartWindow((d.height - this.getSize().height) / 2));
 		getContentPane().addHierarchyBoundsListener(listener);
 
-		if (Constants.OS != OS_T.MACOS) {
-			setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Constants.ICONPATH)));
-		}
+//		if (Constants.OS != OS_T.MACOS) {
+//			setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource(Constants.ICONPATH)));
+//		}
 	}
 
 	public JButton getButAbout() {
